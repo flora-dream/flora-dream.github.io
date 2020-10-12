@@ -20,21 +20,23 @@
     var CONFIG = {"hostname":"flora-dream.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="一、保存退出vi编辑 ~按ESC键 跳到命令模式，然后： :w 保存文件但不退出vi :w file 将修改另外保存到file中，不退出vi :w! 强制保存，不推出vi">
+  <meta name="description" content="所有博客文件均保存在 hexo&#x2F;_posts&#x2F;文件夹下 首先在 hexo &gt; source目录下建一个文件夹叫images，用来保存博客中的图片。 然后打开Typora的 文件 &gt; 偏好设置，进行如下设置。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="vi编辑语句">
-<meta property="og:url" content="https://flora-dream.github.io/2020/10/08/vi%E7%BC%96%E8%BE%91%E8%AF%AD%E5%8F%A5/index.html">
+<meta property="og:title" content="hexo博客中插入图片">
+<meta property="og:url" content="https://flora-dream.github.io/2020/10/12/hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87/index.html">
 <meta property="og:site_name" content="Flora">
-<meta property="og:description" content="一、保存退出vi编辑 ~按ESC键 跳到命令模式，然后： :w 保存文件但不退出vi :w file 将修改另外保存到file中，不退出vi :w! 强制保存，不推出vi">
+<meta property="og:description" content="所有博客文件均保存在 hexo&#x2F;_posts&#x2F;文件夹下 首先在 hexo &gt; source目录下建一个文件夹叫images，用来保存博客中的图片。 然后打开Typora的 文件 &gt; 偏好设置，进行如下设置。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-10-08T08:20:47.000Z">
-<meta property="article:modified_time" content="2020-10-09T10:12:03.618Z">
+<meta property="og:image" content="https://flora-dream.github.io/images/hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87/2019090318384447.png">
+<meta property="article:published_time" content="2020-10-12T02:09:55.000Z">
+<meta property="article:modified_time" content="2020-10-12T02:36:47.621Z">
 <meta property="article:author" content="Flora Jin">
-<meta property="article:tag" content="vim">
-<meta property="article:tag" content="使用方法">
+<meta property="article:tag" content="hexo">
+<meta property="article:tag" content="typora">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://flora-dream.github.io/images/hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87/2019090318384447.png">
 
-<link rel="canonical" href="https://flora-dream.github.io/2020/10/08/vi%E7%BC%96%E8%BE%91%E8%AF%AD%E5%8F%A5/">
+<link rel="canonical" href="https://flora-dream.github.io/2020/10/12/hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87/">
 
 
 <script id="page-configurations">
@@ -47,7 +49,7 @@
   };
 </script>
 
-  <title>vi编辑语句 | Flora</title>
+  <title>hexo博客中插入图片 | Flora</title>
   
 
 
@@ -162,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://flora-dream.github.io/2020/10/08/vi%E7%BC%96%E8%BE%91%E8%AF%AD%E5%8F%A5/">
+    <link itemprop="mainEntityOfPage" href="https://flora-dream.github.io/2020/10/12/hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/1.gif">
@@ -175,7 +177,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          vi编辑语句
+          hexo博客中插入图片
         </h1>
 
         <div class="post-meta">
@@ -184,23 +186,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2020-10-08 16:20:47" itemprop="dateCreated datePublished" datetime="2020-10-08T16:20:47+08:00">2020-10-08</time>
+              <time title="创建时间：2020-10-12 10:09:55 / 修改时间：10:36:47" itemprop="dateCreated datePublished" datetime="2020-10-12T10:09:55+08:00">2020-10-12</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-09 18:12:03" itemprop="dateModified" datetime="2020-10-09T18:12:03+08:00">2020-10-09</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">工具使用方法</span></a>
+                  <a href="/categories/hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" itemprop="url" rel="index"><span itemprop="name">hexo博客搭建</span></a>
                 </span>
             </span>
 
@@ -215,18 +211,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="一、保存退出vi编辑"><a href="#一、保存退出vi编辑" class="headerlink" title="一、保存退出vi编辑 ~"></a>一、保存退出vi编辑 ~</h2><p>按ESC键 跳到<a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao">命令模式</a>，然后：</p>
-<p>:w 保存文件但不退出vi</p>
-<p>:w file 将修改另外保存到file中，不退出vi</p>
-<p>:w! 强制保存，不推出vi</p>
-  <a id="more"></a>
-
-<p>:wq 保存文件并退出vi</p>
-<p>:wq! 强制保存文件，并退出vi</p>
-<p>q: 不保存文件，退出vi</p>
-<p>:q! 不保存文件，强制退出vi</p>
-<p>:e! 放弃所有修改，从上次保存文件开始再编辑</p>
-<h2 id="二、……………"><a href="#二、……………" class="headerlink" title="二、……………."></a>二、…………….</h2><p>第二段内容………….</p>
+        <p>所有博客文件均保存在 <code>hexo/_posts/</code>文件夹下</p>
+<p>首先在 <code>hexo &gt; source</code>目录下建一个文件夹叫images，用来保存博客中的图片。</p>
+<p>然后打开Typora的 <code>文件 &gt; 偏好设置</code>，进行如下设置。</p>
+<p><img src="/images/hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87/2019090318384447.png" alt="在这里插入图片描述"></p>
 
     </div>
 
@@ -275,8 +263,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/vim/" rel="tag"># vim</a>
-              <a href="/tags/%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" rel="tag"># 使用方法</a>
+              <a href="/tags/hexo/" rel="tag"># hexo</a>
+              <a href="/tags/typora/" rel="tag"># typora</a>
           </div>
 
         
@@ -285,13 +273,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/10/08/hello-world/" rel="prev" title="Hello World">
-      <i class="fa fa-chevron-left"></i> Hello World
+    <a href="/2020/10/12/%EF%BC%88%E4%B8%80%EF%BC%89ResNet/" rel="prev" title="（一）ResNet">
+      <i class="fa fa-chevron-left"></i> （一）ResNet
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/10/09/%E7%A7%91%E7%A0%94%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" rel="next" title="科研学习方法">
-      科研学习方法 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -350,7 +335,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%BF%9D%E5%AD%98%E9%80%80%E5%87%BAvi%E7%BC%96%E8%BE%91"><span class="nav-number">1.</span> <span class="nav-text">一、保存退出vi编辑 ~</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E2%80%A6%E2%80%A6%E2%80%A6%E2%80%A6%E2%80%A6"><span class="nav-number">2.</span> <span class="nav-text">二、…………….</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

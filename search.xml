@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Hello World</title>
+    <url>/2020/10/08/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+  <a id="more"></a>
+
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>hexo博客中插入图片</title>
+    <url>/2020/10/12/hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87/</url>
+    <content><![CDATA[<p>所有博客文件均保存在 <code>hexo/_posts/</code>文件夹下</p>
+<p>首先在 <code>hexo &gt; source</code>目录下建一个文件夹叫images，用来保存博客中的图片。</p>
+<p>然后打开Typora的 <code>文件 &gt; 偏好设置</code>，进行如下设置。</p>
+<p><img src="/images/hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87/2019090318384447.png" alt="在这里插入图片描述"></p>
+]]></content>
+      <categories>
+        <category>hexo博客搭建</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+        <tag>typora</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vi编辑语句</title>
+    <url>/2020/10/08/vi%E7%BC%96%E8%BE%91%E8%AF%AD%E5%8F%A5/</url>
+    <content><![CDATA[<h2 id="一、保存退出vi编辑"><a href="#一、保存退出vi编辑" class="headerlink" title="一、保存退出vi编辑 ~"></a>一、保存退出vi编辑 ~</h2><p>按ESC键 跳到<a href="https://www.baidu.com/s?wd=%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao">命令模式</a>，然后：</p>
+<p>:w 保存文件但不退出vi</p>
+<p>:w file 将修改另外保存到file中，不退出vi</p>
+<p>:w! 强制保存，不推出vi</p>
+  <a id="more"></a>
+
+<p>:wq 保存文件并退出vi</p>
+<p>:wq! 强制保存文件，并退出vi</p>
+<p>q: 不保存文件，退出vi</p>
+<p>:q! 不保存文件，强制退出vi</p>
+<p>:e! 放弃所有修改，从上次保存文件开始再编辑</p>
+<h2 id="二、……………"><a href="#二、……………" class="headerlink" title="二、……………."></a>二、…………….</h2><p>第二段内容………….</p>
+]]></content>
+      <categories>
+        <category>工具使用方法</category>
+      </categories>
+      <tags>
+        <tag>vim</tag>
+        <tag>使用方法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>研二上学习计划（一）</title>
+    <url>/2020/10/08/%E7%A0%94%E4%BA%8C%E4%B8%8A%E2%80%94_%E8%AE%A1%E5%88%92%E4%B8%80_10.8/</url>
+    <content><![CDATA[<h2 id="ToDoList"><a href="#ToDoList" class="headerlink" title="ToDoList"></a>ToDoList</h2><p>8:00-9:00 数据结构刷题</p>
+<p>9:00-10:00 论文学习</p>
+<p>10:00-12:00 代码调试</p>
+  <a id="more"></a>
+
+<p>14:00-15:00 LaTeX、Linux学习</p>
+<p>15:00-16:00 opencv练手demo</p>
+<p>16:00-17:00 Vue项目</p>
+<p>17:00-21:00 跳舞、洗漱</p>
+<p>21:00 — —  领域相关学习</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>科研学习方法</title>
+    <url>/2020/10/09/%E7%A7%91%E7%A0%94%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<h2 id="一、如何发现问题"><a href="#一、如何发现问题" class="headerlink" title="一、如何发现问题"></a>一、如何发现问题</h2><h4 id="多看文章，多调代码"><a href="#多看文章，多调代码" class="headerlink" title="多看文章，多调代码"></a><strong>多看文章，多调代码</strong></h4><ul>
+<li><p><strong>文章或代码不懂之处也许就是作者也没搞清楚的地方</strong></p>
+</li>
+<li><p>有选择的调试代码，有的只需要快速理解作者解决问题的思路与方法</p>
+<a id="more"></a>
+
+</li>
+</ul>
+<h4 id="观察性能指标背后的东西"><a href="#观察性能指标背后的东西" class="headerlink" title="观察性能指标背后的东西"></a><strong>观察性能指标背后的东西</strong></h4><ul>
+<li><strong>学术界的数据库，都有相关数据指标</strong></li>
+<li>可视化性能指标背后的东西：错误分布</li>
+</ul>
+<h2 id="二、如何做实验"><a href="#二、如何做实验" class="headerlink" title="二、如何做实验"></a>二、如何做实验</h2><h4 id="控制变量"><a href="#控制变量" class="headerlink" title="控制变量"></a>控制变量</h4><ul>
+<li>如果做实验不控制变量，会导致结果无法分析</li>
+</ul>
+<h4 id="实验流程自动化"><a href="#实验流程自动化" class="headerlink" title="实验流程自动化"></a>实验流程自动化</h4><ul>
+<li>把实验流程自动化，一键run可以提高实验效率</li>
+</ul>
+<h4 id="整理分析实验结果"><a href="#整理分析实验结果" class="headerlink" title="整理分析实验结果"></a>整理分析实验结果</h4><ul>
+<li>记录好每个实验，改动以及对应的结果分析可以用文档记录</li>
+</ul>
+<h2 id="三、良好的科研习惯"><a href="#三、良好的科研习惯" class="headerlink" title="三、良好的科研习惯"></a>三、良好的科研习惯</h2><h4 id="每天早上刷Arxiv"><a href="#每天早上刷Arxiv" class="headerlink" title="每天早上刷Arxiv"></a>每天早上刷Arxiv</h4><h4 id="论文分类整理"><a href="#论文分类整理" class="headerlink" title="论文分类整理"></a>论文分类整理</h4><h4 id="保证有大块连续的学习时间"><a href="#保证有大块连续的学习时间" class="headerlink" title="保证有大块连续的学习时间"></a>保证有大块连续的学习时间</h4>]]></content>
+  </entry>
+  <entry>
+    <title>（一）ResNet</title>
+    <url>/2020/10/12/%EF%BC%88%E4%B8%80%EF%BC%89ResNet/</url>
+    <content><![CDATA[<h2 id="论文简介"><a href="#论文简介" class="headerlink" title="论文简介"></a>论文简介</h2><p><strong>Deep Residual Learning for Image Recognition</strong></p>
+<p>作者单位：微软亚洲研究院（MSRA）</p>
+<p>作者团队：Kaiming He(何恺明), Xiangyu Zhang, Shaoqing Ren, Jian Sun</p>
+<p>引用量：<font color=red>49301</font></p>
+<p>论文链接（收录于CVPR 2016）：</p>
+<p><a href="https://openaccess.thecvf.com/content_cvpr_2016/html/He_Deep_Residual_Learning_CVPR_2016_paper.html">https://openaccess.thecvf.com/content_cvpr_2016/html/He_Deep_Residual_Learning_CVPR_2016_paper.html</a></p>
+<p>现如今2020年，依旧作为各大CV任务的backbone，比如ResNet-50、ResNet-101。入坑卷积神经网络，必学paper之一！</p>
+<p><img src="/images/%EF%BC%88%E4%B8%80%EF%BC%89ResNet/image-20201012103231433.png"></p>
+]]></content>
+      <categories>
+        <category>论文学习</category>
+      </categories>
+      <tags>
+        <tag>论文</tag>
+        <tag>经典必看</tag>
+        <tag>CVPR</tag>
+      </tags>
+  </entry>
+</search>
