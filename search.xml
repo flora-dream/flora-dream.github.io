@@ -23,10 +23,16 @@
   <entry>
     <title>hexo博客中插入图片</title>
     <url>/2020/10/12/hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87/</url>
-    <content><![CDATA[<p>所有博客文件均保存在 <code>hexo/_posts/</code>文件夹下</p>
+    <content><![CDATA[<p>所有博客文件均保存在<font color=#7E7129> <code>hexo/_posts/</code></font>文件夹下</p>
 <p>首先在 <code>hexo &gt; source</code>目录下建一个文件夹叫images，用来保存博客中的图片。</p>
 <p>然后打开Typora的 <code>文件 &gt; 偏好设置</code>，进行如下设置。</p>
+<a id="more"></a>
+
 <p><img src="/images/hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87/2019090318384447.png" alt="在这里插入图片描述"></p>
+<p>这样的话所有的博客中的图片都将会保存到 <code>/source/images/该博客md文件名/图片名称</code></p>
+<p>但是仅仅这样设置还不够，这样设置在typora中倒是能看图片了，但是使用的却是相对于当前md文件的相对路径，可是如果启动hexo，是要用服务器访问的，而服务器显然无法根据这个相对路径正确访问到图片，因此还需要在typora中进行进一步设置。</p>
+<p>在typora菜单栏点击 <code>格式-&gt;图像-&gt;设置图片根目录</code>，将<code>hexo/source</code>作为其根目录即可。</p>
+<p><strong>一定要先设置了图片根目录后再插入图片，否则图片路径会不正确喔！</strong></p>
 ]]></content>
       <categories>
         <category>hexo博客搭建</category>
@@ -104,14 +110,24 @@
   <entry>
     <title>（一）ResNet</title>
     <url>/2020/10/12/%EF%BC%88%E4%B8%80%EF%BC%89ResNet/</url>
-    <content><![CDATA[<h2 id="论文简介"><a href="#论文简介" class="headerlink" title="论文简介"></a>论文简介</h2><p><strong>Deep Residual Learning for Image Recognition</strong></p>
+    <content><![CDATA[<h2 id="一、论文简介"><a href="#一、论文简介" class="headerlink" title="一、论文简介"></a>一、论文简介</h2><p><strong>Deep Residual Learning for Image Recognition</strong></p>
 <p>作者单位：微软亚洲研究院（MSRA）</p>
 <p>作者团队：Kaiming He(何恺明), Xiangyu Zhang, Shaoqing Ren, Jian Sun</p>
 <p>引用量：<font color=red>49301</font></p>
-<p>论文链接（收录于CVPR 2016）：</p>
-<p><a href="https://openaccess.thecvf.com/content_cvpr_2016/html/He_Deep_Residual_Learning_CVPR_2016_paper.html">https://openaccess.thecvf.com/content_cvpr_2016/html/He_Deep_Residual_Learning_CVPR_2016_paper.html</a></p>
+<a id="more"></a>
+
+<p><a href="https://openaccess.thecvf.com/content_cvpr_2016/html/He_Deep_Residual_Learning_CVPR_2016_paper.html">论文链接（收录于CVPR 2016)</a></p>
 <p>现如今2020年，依旧作为各大CV任务的backbone，比如ResNet-50、ResNet-101。入坑卷积神经网络，必学paper之一！</p>
 <p><img src="/images/%EF%BC%88%E4%B8%80%EF%BC%89ResNet/image-20201012103231433.png"></p>
+<h2 id="二、思想"><a href="#二、思想" class="headerlink" title="二、思想"></a>二、思想</h2><h4 id="2-1-问题来源"><a href="#2-1-问题来源" class="headerlink" title="2.1 问题来源"></a>2.1 问题来源</h4><p>因为CNN能够提取low/mid/high-level的特征，网络的层数越多，意味着能够提取到不同level的特征越丰富。并且，越深的网络提取的特征越抽象，越具有语义信息。</p>
+<p>但是单纯的增加网络层数会导致<strong>梯度弥散或爆炸</strong>。</p>
+<p>用正则化初始化和中间的正则化层可以训练几十层网络，但网络层数增加又会面临<strong>退化问题</strong>（退化不是过拟合，它是在训练集上准确率饱和或下降）。</p>
+<p><img src="/images/%EF%BC%88%E4%B8%80%EF%BC%89ResNet/20190421112345786.png" alt="网络加深时测试错误率和训练错误率显示"></p>
+<h4 id="2-2-解决办法"><a href="#2-2-解决办法" class="headerlink" title="2.2 解决办法"></a>2.2 解决办法</h4><p>网络设计为H(x) = F(x) + x，我们可以转化为学习一个残差函数F(x) = H(x) - x。</p>
+<blockquote>
+<p>因为对于深层网络，准确率接近于饱和，损失函数的学习程度比较小，这里用差分的思想放大了损失的这一部分。参考一篇博客的例子，H(x) = 5.1，H(x)’=x=5，F(x)=0.1，可以看到H(x)和H(x)’数值之间的变化很小。当H(x)‘’=5.2时，F(x)’=0.2，这时F(x)和F(x)’之间的变化明显，可以看到残差网络可以对<strong>输出的变化更敏感</strong>。假设当前网络的深度能够使得错误率最低，如果继续增加咱们的ResNet，为了保证下一层的网络状态仍然是最优状态，咱们只需要把令F(x)=0就好啦！用ResNet的话，也只用小小的更新F(x)部分的权重值就行啦。</p>
+</blockquote>
+<p><img src="/images/%EF%BC%88%E4%B8%80%EF%BC%89ResNet/2019042111212843.png" alt="两种ResNet block"></p>
 ]]></content>
       <categories>
         <category>论文学习</category>
