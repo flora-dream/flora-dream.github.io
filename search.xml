@@ -1,6 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Linux课程学习</title>
+    <url>/2020/10/14/Linux%E8%AF%BE%E7%A8%8B%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<h2 id="学习概要"><a href="#学习概要" class="headerlink" title="学习概要"></a>学习概要</h2><p><a href="https://www.bilibili.com/video/BV1dW411M7xL?p=3">视频学习地址</a></p>
+<h4 id="内容介绍"><a href="#内容介绍" class="headerlink" title="内容介绍"></a>内容介绍</h4><ul>
+<li>基础篇</li>
+<li>实操篇</li>
+<li>Linux之大数据</li>
+<li>Linux之Python</li>
+</ul>
+<a id="more"></a>
+
+<h4 id=""><a href="#" class="headerlink" title=""></a><img src="/images/Linux%E8%AF%BE%E7%A8%8B%E5%AD%A6%E4%B9%A0/image-20201014151815949.png"></h4><p><img src="/images/Linux%E8%AF%BE%E7%A8%8B%E5%AD%A6%E4%B9%A0/image-20201014151838015.png"></p>
+]]></content>
+      <categories>
+        <category>Linux课程学习</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python爬取疫情实战</title>
+    <url>/2020/10/13/Python%E7%88%AC%E5%8F%96%E7%96%AB%E6%83%85%E5%AE%9E%E6%88%98/</url>
+    <content><![CDATA[<h2 id="项目概述"><a href="#项目概述" class="headerlink" title="项目概述"></a>项目概述</h2><h3 id="项目效果"><a href="#项目效果" class="headerlink" title="项目效果"></a>项目效果</h3><img src="/images/Python%E7%88%AC%E5%8F%96%E7%96%AB%E6%83%85%E5%AE%9E%E6%88%98/image-20201013165615673.png" alt="image-20201013165615673" />
+
+
+
+
+
+<h3 id="项目介绍"><a href="#项目介绍" class="headerlink" title="项目介绍"></a>项目介绍</h3><p><a href="https://www.bilibili.com/video/BV177411j7qJ?p=1">项目学习地址</a></p>
+<p>本项目是Python + Flask + Echarts打造的疫情监控系统，涉及的技术有：</p>
+<a id="more"></a>
+
+<ul>
+<li>Python 网络爬虫</li>
+<li>使用 Python与MySQL数据库交互</li>
+<li>使用Flask构建Web项目</li>
+<li>基于Echarts数据可视化展示</li>
+<li>在Linux上部署web项目及爬虫</li>
+</ul>
+<h3 id="项目架构"><a href="#项目架构" class="headerlink" title="项目架构"></a>项目架构</h3><p>数据获取 –&gt; 数据持久化 –&gt; flask搭建web后台 –&gt; 数据可视化 h5 + echarts</p>
+<p><img src="/images/Python%E7%88%AC%E5%8F%96%E7%96%AB%E6%83%85%E5%AE%9E%E6%88%98/image-20201013171114384.png" alt="image-20201013171114384"></p>
+<h3 id="项目环境"><a href="#项目环境" class="headerlink" title="项目环境"></a>项目环境</h3><ul>
+<li>Python 3.6</li>
+<li>MySQL 5.7</li>
+<li>PyCharm（Python IDE）</li>
+<li>Jupyter notebook（Python IDE）</li>
+<li>HBuild （前端IDE）</li>
+<li>Linux主机 （后期项目部署）</li>
+</ul>
+<hr>
+<blockquote>
+<p><strong>修改Jupyter工作目录</strong></p>
+<ol>
+<li>打开cmd输入<code>jupyter notebook --generate-config</code>创建配置文件，可以看到生成在<code>C:\Users\66\.jupyter\jupyter_notebook_config.py</code>目录下</li>
+</ol>
+<p><img src="/images/Python%E7%88%AC%E5%8F%96%E7%96%AB%E6%83%85%E5%AE%9E%E6%88%98/image-20201013172200612.png" alt="image-20201013172200612"></p>
+<ol start="2">
+<li><p>打开该文件搜索notebook_dir并取消改行注释，将路径修改为想要存放的工作路径，并且添加r让\不被转义</p>
+<p><img src="/images/Python%E7%88%AC%E5%8F%96%E7%96%AB%E6%83%85%E5%AE%9E%E6%88%98/image-20201013172912102.png" alt="image-20201013172912102"></p>
+</li>
+<li><p>工作路径下新建记事本并修改成<code>start.cmd</code>，在该记事本中写入<code>jupyter notebook</code>，以后双击该文件变自动打开Jupyter</p>
+<p><img src="/images/Python%E7%88%AC%E5%8F%96%E7%96%AB%E6%83%85%E5%AE%9E%E6%88%98/image-20201013173629714.png" alt="image-20201013173629714"></p>
+</li>
+</ol>
+</blockquote>
+<blockquote>
+<p><strong>notebook常用快捷键</strong></p>
+<ul>
+<li>单元格类型转换：Y、M</li>
+<li>插入单元格：A、B</li>
+<li>进入命令模式：Esc</li>
+<li>运行单元格： ctrl / shift / alt + enter</li>
+<li>删除单元格： DD</li>
+</ul>
+</blockquote>
+<h2 id="数据获取"><a href="#数据获取" class="headerlink" title="数据获取"></a>数据获取</h2><h3 id="爬虫概述"><a href="#爬虫概述" class="headerlink" title="爬虫概述"></a>爬虫概述</h3><p><strong><font color=red>爬虫就是给网站发起请求，并从响应中提取需要数据的自动化程序</font></strong></p>
+<p><img src="/images/Python%E7%88%AC%E5%8F%96%E7%96%AB%E6%83%85%E5%AE%9E%E6%88%98/image-20201014152738782.png" alt="image-20201014152738782"></p>
+<h3 id="urllib发送请求"><a href="#urllib发送请求" class="headerlink" title="urllib发送请求"></a>urllib发送请求</h3><h2 id="Web程序开发"><a href="#Web程序开发" class="headerlink" title="Web程序开发"></a>Web程序开发</h2><h2 id="项目部署"><a href="#项目部署" class="headerlink" title="项目部署"></a>项目部署</h2>]]></content>
+      <categories>
+        <category>web实战开发</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>python</tag>
+        <tag>flask</tag>
+        <tag>web开发</tag>
+        <tag>echarts</tag>
+        <tag>mysql</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello World</title>
     <url>/2020/10/08/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -67,6 +159,26 @@
       </tags>
   </entry>
   <entry>
+    <title>法律法规文件管理系统维护记录</title>
+    <url>/2020/10/13/%E6%B3%95%E5%BE%8B%E6%B3%95%E8%A7%84%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E7%BB%B4%E6%8A%A4%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<p><a href="http://47.93.231.64:8000/pc/#/search">项目网址</a></p>
+<p><a href="https://github.com/Fenghaze/cjhs_mp">手机部分GitHub项目</a></p>
+<p><a href="https://github.com/Fenghaze/cjhs_front">前台部分GitHub项目</a></p>
+<a id="more"></a>
+
+<h2 id="2020-10-13-修改记录（一）"><a href="#2020-10-13-修改记录（一）" class="headerlink" title="2020/10/13 修改记录（一）"></a>2020/10/13 修改记录（一）</h2><h3 id="修改需求"><a href="#修改需求" class="headerlink" title="修改需求"></a>修改需求</h3><p><img src="/images/%E6%B3%95%E5%BE%8B%E6%B3%95%E8%A7%84%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E7%BB%B4%E6%8A%A4%E8%AE%B0%E5%BD%95/1.png" alt="1"></p>
+]]></content>
+      <categories>
+        <category>web实战开发</category>
+      </categories>
+      <tags>
+        <tag>web开发</tag>
+        <tag>vue</tag>
+        <tag>前端开发</tag>
+        <tag>项目维护</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>研二上学习计划（一）</title>
     <url>/2020/10/08/%E7%A0%94%E4%BA%8C%E4%B8%8A%E2%80%94_%E8%AE%A1%E5%88%92%E4%B8%80_10.8/</url>
     <content><![CDATA[<h2 id="ToDoList"><a href="#ToDoList" class="headerlink" title="ToDoList"></a>ToDoList</h2><p>8:00-9:00 数据结构刷题</p>
@@ -80,6 +192,16 @@
 <p>17:00-21:00 跳舞、洗漱</p>
 <p>21:00 — —  领域相关学习</p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>船舶识别的一些想法</title>
+    <url>/2020/10/15/%E8%88%B9%E8%88%B6%E8%AF%86%E5%88%AB%E7%9A%84%E4%B8%80%E4%BA%9B%E6%83%B3%E6%B3%95/</url>
+    <content><![CDATA[<p>目前我们项目是想将船舶的AIS数据和从视频中检测到的船舶视觉信息进行关联，能做到一个实时监控管理的效果。目前存在的困难是，采用深度学习方法所检测得到的数据是在二维图像中所表示的，而AIS设备采集的数据是三维物理世界的数据，将两者相关联起来存在很大的挑战。</p>
+<h2 id="想法一"><a href="#想法一" class="headerlink" title="想法一"></a>想法一</h2><p>因为疫情，出入校门需要刷校园二维码。今天早上发现可以直接刷脸进入的时候，突然好奇原来人脸识别不需要像我所接触到的大部分深度模型需要大量数据集进行预训练，因为在此之前学校掌握我的个人信息应该就只有一张入学拍的清晰个人照。在识别成功我的人脸时，检测设备屏幕右下角出现了我那张个人照以及其他个人信息，这一点和我们实际的一个任务场景需求十分相似。我们也需要一个摄像头能检测到船并且能绑定匹配数据库里相应信息进行展示。于是便猜想是否能把人脸识别的思想套用在船舶识别上，人脸上面的关键点作为唯一标识这个人的ID，那么船舶是否也可以像人脸识别一样做关键点评估。</p>
+]]></content>
+      <categories>
+        <category>海事监管平台</category>
+      </categories>
   </entry>
   <entry>
     <title>科研学习方法</title>
@@ -110,7 +232,7 @@
   <entry>
     <title>（一）ResNet</title>
     <url>/2020/10/12/%EF%BC%88%E4%B8%80%EF%BC%89ResNet/</url>
-    <content><![CDATA[<h2 id="一、论文简介"><a href="#一、论文简介" class="headerlink" title="一、论文简介"></a>一、论文简介</h2><p><strong>Deep Residual Learning for Image Recognition</strong></p>
+    <content><![CDATA[<h2 id="论文简介"><a href="#论文简介" class="headerlink" title="论文简介"></a>论文简介</h2><p><strong>Deep Residual Learning for Image Recognition</strong></p>
 <p>作者单位：微软亚洲研究院（MSRA）</p>
 <p>作者团队：Kaiming He(何恺明), Xiangyu Zhang, Shaoqing Ren, Jian Sun</p>
 <p>引用量：<font color=red>49301</font></p>
@@ -118,16 +240,32 @@
 
 <p><a href="https://openaccess.thecvf.com/content_cvpr_2016/html/He_Deep_Residual_Learning_CVPR_2016_paper.html">论文链接（收录于CVPR 2016)</a></p>
 <p>现如今2020年，依旧作为各大CV任务的backbone，比如ResNet-50、ResNet-101。入坑卷积神经网络，必学paper之一！</p>
-<p><img src="/images/%EF%BC%88%E4%B8%80%EF%BC%89ResNet/image-20201012103231433.png"></p>
-<h2 id="二、思想"><a href="#二、思想" class="headerlink" title="二、思想"></a>二、思想</h2><h4 id="2-1-问题来源"><a href="#2-1-问题来源" class="headerlink" title="2.1 问题来源"></a>2.1 问题来源</h4><p>因为CNN能够提取low/mid/high-level的特征，网络的层数越多，意味着能够提取到不同level的特征越丰富。并且，越深的网络提取的特征越抽象，越具有语义信息。</p>
+<h2 id="思想"><a href="#思想" class="headerlink" title="思想"></a>思想</h2><h4 id="问题来源"><a href="#问题来源" class="headerlink" title="问题来源"></a>问题来源</h4><p>因为CNN能够提取low/mid/high-level的特征，网络的层数越多，意味着能够提取到不同level的特征越丰富。并且，越深的网络提取的特征越抽象，越具有语义信息。</p>
 <p>但是单纯的增加网络层数会导致<strong>梯度弥散或爆炸</strong>。</p>
 <p>用正则化初始化和中间的正则化层可以训练几十层网络，但网络层数增加又会面临<strong>退化问题</strong>（退化不是过拟合，它是在训练集上准确率饱和或下降）。</p>
 <p><img src="/images/%EF%BC%88%E4%B8%80%EF%BC%89ResNet/20190421112345786.png" alt="网络加深时测试错误率和训练错误率显示"></p>
-<h4 id="2-2-解决办法"><a href="#2-2-解决办法" class="headerlink" title="2.2 解决办法"></a>2.2 解决办法</h4><p>网络设计为H(x) = F(x) + x，我们可以转化为学习一个残差函数F(x) = H(x) - x。</p>
+<h4 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h4><p>网络设计为H(x) = F(x) + x，我们可以转化为学习一个残差函数F(x) = H(x) - x。</p>
 <blockquote>
 <p>因为对于深层网络，准确率接近于饱和，损失函数的学习程度比较小，这里用差分的思想放大了损失的这一部分。参考一篇博客的例子，H(x) = 5.1，H(x)’=x=5，F(x)=0.1，可以看到H(x)和H(x)’数值之间的变化很小。当H(x)‘’=5.2时，F(x)’=0.2，这时F(x)和F(x)’之间的变化明显，可以看到残差网络可以对<strong>输出的变化更敏感</strong>。假设当前网络的深度能够使得错误率最低，如果继续增加咱们的ResNet，为了保证下一层的网络状态仍然是最优状态，咱们只需要把令F(x)=0就好啦！用ResNet的话，也只用小小的更新F(x)部分的权重值就行啦。</p>
 </blockquote>
+<p><img src="/images/%EF%BC%88%E4%B8%80%EF%BC%89ResNet/image-20201012103231433.png"></p>
+<h4 id="公式"><a href="#公式" class="headerlink" title="公式"></a>公式</h4><h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><h4 id="结构理解"><a href="#结构理解" class="headerlink" title="结构理解"></a>结构理解</h4><p>有1×1卷积的为bottleneck可以减少参数量，没有的为basicblock。</p>
 <p><img src="/images/%EF%BC%88%E4%B8%80%EF%BC%89ResNet/2019042111212843.png" alt="两种ResNet block"></p>
+<blockquote>
+<ul>
+<li>虚线表示不同维度的连接，实线表示相同维度。</li>
+<li>18/34是由basicblock组成，50/101/152是由bottleneck组成</li>
+<li>除了公共部分conv1外，都是由四个stage组成（conv2_x,conv3_x,conv4_x,conv5_x）,每个起始通道数都为<strong>64,128,256,512</strong></li>
+</ul>
+</blockquote>
+<p><img src="/images/%EF%BC%88%E4%B8%80%EF%BC%89ResNet/2019072411484875.png" alt="img"></p>
+<h4 id="具体代码"><a href="#具体代码" class="headerlink" title="具体代码"></a>具体代码</h4><ol>
+<li><strong>两种卷积：1×1conv和3×3conv</strong></li>
+<li><strong>两种结构：BasicBlock和Bottleneck</strong></li>
+<li><strong>网络模型：ResNet</strong></li>
+</ol>
+<p><a href="https://blog.csdn.net/sunny_yeah_/article/details/89430124">参考博客1</a></p>
+<p><a href="https://blog.csdn.net/u014453898/article/details/97115891?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-5.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-5.channel_param">代码实现参考博客</a></p>
 ]]></content>
       <categories>
         <category>论文学习</category>
