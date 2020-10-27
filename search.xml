@@ -135,6 +135,30 @@
       </tags>
   </entry>
   <entry>
+    <title>numpy的操作</title>
+    <url>/2020/10/26/numpy%E7%9A%84%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<h1 id="numpy中的ravel-、flatten-、squeeze-的用法与区别"><a href="#numpy中的ravel-、flatten-、squeeze-的用法与区别" class="headerlink" title="numpy中的ravel()、flatten()、squeeze()的用法与区别"></a>numpy中的ravel()、flatten()、squeeze()的用法与区别</h1><p><a href="https://blog.csdn.net/tymatlab/article/details/79009618">参考博客</a></p>
+<p>numpy中的ravel()、flatten()、squeeze()都有将多维数组转换为一维数组的功能，区别： </p>
+<ul>
+<li>ravel()：如果没有必要，不会产生源数据的副本 </li>
+<li>flatten()：返回源数据的副本 </li>
+<li>squeeze()：只能对维数为1的维度降维</li>
+</ul>
+<a id="more"></a>
+
+<p>另外，reshape(-1)也可以“拉平”多维数组</p>
+<p><img src="/images/numpy%E7%9A%84%E6%93%8D%E4%BD%9C/20180109095535985" alt="这里写图片描述"></p>
+]]></content>
+      <categories>
+        <category>numpy</category>
+      </categories>
+      <tags>
+        <tag>使用方法</tag>
+        <tag>numpy</tag>
+        <tag>语法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>法律法规文件管理系统维护记录</title>
     <url>/2020/10/13/%E6%B3%95%E5%BE%8B%E6%B3%95%E8%A7%84%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E7%BB%B4%E6%8A%A4%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<p><a href="http://47.93.231.64:8000/pc/#/search">项目网址</a></p>
@@ -177,6 +201,20 @@
         <tag>vim</tag>
         <tag>使用方法</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>海康威视python开发</title>
+    <url>/2020/10/22/%E6%B5%B7%E5%BA%B7%E5%A8%81%E8%A7%86python%E5%BC%80%E5%8F%91/</url>
+    <content><![CDATA[<h3 id="python调用海康威视摄像头"><a href="#python调用海康威视摄像头" class="headerlink" title="python调用海康威视摄像头"></a>python调用海康威视摄像头</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"></span><br><span class="line"><span class="comment"># Channels1和Channels2的延迟要高，1通道是主码流，2通道是子码流</span></span><br><span class="line"><span class="comment"># cap1 = cv2.VideoCapture(&quot;rtsp://admin:admin12345@169.254.32.47/Streaming/Channels/1&quot;)</span></span><br><span class="line"><span class="comment"># ret1, frame1 = cap1.read()</span></span><br><span class="line"><span class="comment"># 从海康威视摄像头读取数据</span></span><br><span class="line">cap = cv2.VideoCapture(<span class="string">&quot;rtsp://admin:admin12345@169.254.32.47/Streaming/Channels/2&quot;</span>)</span><br><span class="line">ret, frame = cap.read()</span><br><span class="line"><span class="keyword">while</span> ret:</span><br><span class="line">    ret, frame = cap.read()</span><br><span class="line">    cv2.imshow(<span class="string">&quot;frame&quot;</span>, frame)</span><br><span class="line">    <span class="comment"># ret1, frame1 = cap1.read()</span></span><br><span class="line">    <span class="comment"># cv2.imshow(&quot;frame1&quot;, frame1)</span></span><br><span class="line">    <span class="keyword">if</span> cv2.waitKey(<span class="number">1</span>) &amp; <span class="number">0xFF</span> == ord(<span class="string">&#x27;q&#x27;</span>):</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">cv2.destroyAllWindows()</span><br><span class="line">cap.release()</span><br></pre></td></tr></table></figure>
+
+<p><img src="../images/%E6%B5%B7%E5%BA%B7%E5%A8%81%E8%A7%86python%E5%BC%80%E5%8F%91/image-20201022154852483.png" alt="image-20201022154852483"></p>
+<h3 id="摄像头标定"><a href="#摄像头标定" class="headerlink" title="摄像头标定"></a>摄像头标定</h3><p><img src="../images/%E6%B5%B7%E5%BA%B7%E5%A8%81%E8%A7%86python%E5%BC%80%E5%8F%91/image-20201022163210824.png" alt="image-20201022163210824"></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># termination criteria</span></span><br><span class="line">criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, <span class="number">30</span>, <span class="number">0.001</span>)</span><br><span class="line"><span class="comment"># prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,5,0)</span></span><br><span class="line">objp = np.zeros((<span class="number">8</span>*<span class="number">6</span>, <span class="number">3</span>), np.float32)</span><br><span class="line">objp[:, :<span class="number">2</span>] = np.mgrid[<span class="number">0</span>:<span class="number">19.6</span>:<span class="number">2.45</span>, <span class="number">0</span>:<span class="number">14.7</span>:<span class="number">2.45</span>].T.reshape(<span class="number">-1</span>, <span class="number">2</span>)</span><br><span class="line"><span class="comment"># Arrays to store object points and image points from all the images.</span></span><br><span class="line">objpoints = []  <span class="comment"># 3d point in real world space</span></span><br><span class="line">imgpoints = []  <span class="comment"># 2d points in image plane.</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Channels1和Channels2的延迟要高，1通道是主码流，2通道是子码流</span></span><br><span class="line"><span class="comment"># cap1 = cv2.VideoCapture(&quot;rtsp://admin:admin12345@169.254.32.47/Streaming/Channels/1&quot;)</span></span><br><span class="line"><span class="comment"># ret1, frame1 = cap1.read()</span></span><br><span class="line"><span class="comment"># 从海康威视摄像头读取数据</span></span><br><span class="line">cap = cv2.VideoCapture(<span class="string">&quot;rtsp://admin:admin12345@169.254.32.47/Streaming/Channels/2&quot;</span>)</span><br><span class="line">ret, frame = cap.read()</span><br><span class="line"><span class="keyword">while</span> ret:</span><br><span class="line">    ret, frame = cap.read()</span><br><span class="line">    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)</span><br><span class="line">    <span class="comment"># Find the chess board corners</span></span><br><span class="line">    ret, corners = cv2.findChessboardCorners(gray, (<span class="number">8</span>, <span class="number">6</span>), <span class="literal">None</span>)</span><br><span class="line">    <span class="keyword">if</span> ret:</span><br><span class="line">        objpoints.append(objp)</span><br><span class="line">        corners2 = cv2.cornerSubPix(gray, corners, (<span class="number">11</span>, <span class="number">11</span>), (<span class="number">-1</span>, <span class="number">-1</span>), criteria)</span><br><span class="line">        imgpoints.append(corners)</span><br><span class="line">        <span class="comment"># Draw and display the corners</span></span><br><span class="line">        cv2.drawChessboardCorners(frame, (<span class="number">8</span>, <span class="number">6</span>), corners2, ret)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(objpoints, imgpoints, gray.shape[::<span class="number">-1</span>], <span class="literal">None</span>, <span class="literal">None</span>)</span><br><span class="line">np.savez(<span class="string">&#x27;para.npz&#x27;</span>, mtx=mtx, dist=dist, rvecs=rvecs, tvecs=tvecs)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这里注意相机标定不能放在while里面，不然会卡死。。。所以我是先将标定好的参数存入文件再读取</p>
+</blockquote>
+]]></content>
   </entry>
   <entry>
     <title>研二上学习计划（一）</title>
@@ -238,6 +276,41 @@
 </ul>
 </blockquote>
 <p><img src="/images/%E8%88%B9%E8%88%B6%E8%AF%86%E5%88%AB%E7%9A%84%E4%B8%80%E4%BA%9B%E6%83%B3%E6%B3%95/face_recognition_opencv_triplet.jpg" alt="face_recognition_opencv_triplet"></p>
+<hr>
+<h3 id="经典人脸识别算法"><a href="#经典人脸识别算法" class="headerlink" title="经典人脸识别算法"></a>经典人脸识别算法</h3><p><a href="https://blog.csdn.net/kuweicai/article/details/79330524?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.nonecase&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.nonecase">参考博客：EigenFace, FisherFace &amp; LBPH算法小结</a></p>
+<p>在我们想要的粒度上把同一类目标的共性找出来，而且这个共性最好和我们要区分的类是不一样的，做到类内相似、类间区分。什么叫我们想要的粒度？我理解和我们的任务相关的。</p>
+<p>计算机视觉为了做到类内相似、类间区分，从一开始的颜色特征（颜色直方图）、纹理特征（Harr、LBP、HOG、SIFT等）、形状特征等到视觉表达Bag of Words，再到特征学习Deep Learning。</p>
+<p>我们船舶识别与人脸识别任务类似，需要具体到识别出每一艘船的身份信息。采用深度学习方法的分类任务大多停留在通用大类之间，而我们的任务需要在实例上进行分类，难度很大。</p>
+<p>人脸识别需要正视且无遮挡的人脸照片，应用于船舶识别上则需要一个侧拍的船舶照片，正好符合在岸边架设摄像头的场景需求。</p>
+<p><a href="https://blog.csdn.net/kuweicai/article/details/79255270">参考博客：主成分分析（PCA）和线性判别分析（LDA）原理简介</a></p>
+<p><font color=red>PCA的思想是将n维特征映射到k维上（k&lt;n），这k维是全新的正交特征。这k维特征称为主成分，是重新构造出来的k维特征，而不是简单地从n维特征中去除其余n-k维特征。</font></p>
+<h3 id="Eigenface"><a href="#Eigenface" class="headerlink" title="Eigenface"></a>Eigenface</h3><p><a href="https://blog.csdn.net/zouxy09/article/details/45276053?ops_request_misc=%7B%22request_id%22:%22160280972019724836716503%22,%22scm%22:%2220140713.130102334..%22%7D">参考博客：人脸识别之特征脸方法（Eigenface）</a></p>
+<p><strong>特征脸EigenFace从思想上其实挺简单。就相当于把人脸从像素空间变换到另一个空间，在另一个空间中做相似性的计算。</strong></p>
+<p>EigenFace选择的空间变换方法是PCA，也就是大名鼎鼎的主成分分析。EigenFace方法利用PCA得到人脸分布的主要成分，具体实现是对训练集中所有人脸图像的协方差矩阵进行本征值分解，得对对应的本征向量，这些本征向量（特征向量）就是“特征脸”。每个特征向量或者特征脸相当于捕捉或者描述人脸之间的一种变化或者特性。这就意味着每个人脸都可以表示为这些特征脸的线性组合。</p>
+<blockquote>
+<p><font color=red><strong>同理：能否船舶从像素空间变换到另一个空间，每艘船都可以表示为这些特征向量的线性组合。</strong></font></p>
+</blockquote>
+<p>以下是基于特征脸的人脸识别方法：</p>
+<p>1）将训练集的每一个人脸图像都拉长一列，将他们组合在一起形成一个大矩阵A。假设每个人脸图像是MxM大小，那么拉成一列后每个人脸样本的维度就是d=MxM大小了。假设有N个人脸图像，那么样本矩阵A的维度就是dxN了。</p>
+<p>2）将所有的N个人脸在对应维度上加起来，然后求个平均，就得到了一个“平均脸”。你把这个脸显示出来的话，还挺帅的哦。</p>
+<p>3）将N个图像都减去那个平均脸图像，得到差值图像的数据矩阵Φ。</p>
+<p>4）计算协方差矩阵C=ΦΦT。再对其进行特征值分解。就可以得到想要的特征向量（特征脸）了。</p>
+<p>5）将训练集图像和测试集的图像都投影到这些特征向量上了，再对测试集的每个图像找到训练集中的最近邻或者k近邻啥的，进行分类即可。</p>
+<h3 id="FisherFace"><a href="#FisherFace" class="headerlink" title="FisherFace"></a>FisherFace</h3><p>FisherFace 是一种基于LDA(全称Linear Discriminant Analysis, 线性判别分析)的人脸识别算法，LDA的中心思想就是<strong>最大化类间距离，最小化类内距离</strong>。</p>
+<p>LDA有和PCA相同的地方是，都有利用特征值排序找到主元的过程，但是不同的是PCA求的是协方差矩阵的特征值，而LDA是求的是一个更为复杂的矩阵的特征值（具体如下）。其中需要注意的是在求均值时，和PCA也是有所不同的，LDA对每个类别样本求均值，而PCA是对所有样本数据求均值，得到平均脸。</p>
+<p><img src="/images/%E8%88%B9%E8%88%B6%E8%AF%86%E5%88%AB%E7%9A%84%E4%B8%80%E4%BA%9B%E6%83%B3%E6%B3%95/20180219161819357" alt="img"></p>
+<p>有分析显示，对于EigenFace和FisherFace，要想达到好的识别效果，每个样本对象至少要采集8副左右的图像。</p>
+<p><img src="/images/%E8%88%B9%E8%88%B6%E8%AF%86%E5%88%AB%E7%9A%84%E4%B8%80%E4%BA%9B%E6%83%B3%E6%B3%95/20180220115956249" alt="img"></p>
+<h3 id="LBPH"><a href="#LBPH" class="headerlink" title="LBPH"></a>LBPH</h3><p>LBPH是利用局部二值模式直方图的人脸识别算法。</p>
+<p>LBP是典型的二值特征描述子，所以相比前面EigenFace和FisherFace，更多的是整数计算，而整数计算的优势是可以通过各种逻辑操作来进行优化，因此效率较高。另外通常光照对图中的物件带来的影响是全局的，也就是说照片中的物体明暗程度，是往同一个方向改变的，可能是变亮或变暗，只是改变的幅度会因为距离光源的远近而有所不同。所以基本上局部相邻(Local)的像素间，受光照影响后数值也许会改变，但相对大小不会改变，因此LBP特征对光照具有比较好的鲁棒性。</p>
+<p><img src="/images/%E8%88%B9%E8%88%B6%E8%AF%86%E5%88%AB%E7%9A%84%E4%B8%80%E4%BA%9B%E6%83%B3%E6%B3%95/20180219223149142" alt="img"></p>
+<hr>
+<blockquote>
+<p>星期一跟老师交流了一下自己的想法，关于是否可以用深度度量来做船舶识别。老师说学校的人脸识别系统为什么没有数据录入就有那么高的准确度，是因为类似于旷世的人脸识别系统都与公安系统联网，这样每个人的数据就很多啦。</p>
+<p>世上没有长的一模一样的人，但是同一个厂家可能会生产好几艘长的一样的船，这样对于船舶识别来说又是一个潜在问题，害。</p>
+<p>老师提到的三个方向还是可以继续深入的，一个是做CNN的可视化分析，看每一层到底学习到什么样的信息然后再反过来设计。一个是做小样本学习，因为在船舶实例上做识别而言，每一艘的船舶图片实在太少啦。另一个是增加网络模型的输入，将船舶图片和该船的其他相关信息一起输入网络模型中（这里的其他信息可以是之前提到的深度度量信息也可以是其他数据来源的信息如AIS）</p>
+<p>元学习中有一类是基于度量学习 (metric learning) 的小样本学习。度量学习的大致想法是学习一个强大的、具有良好迁移能力的特征提取器 (feature extractor) 来直接应用到目标任务上。我之前的想法就是基于度量学习的全局类别表征，将船舶的特征提取器来应用到目标任务。</p>
+</blockquote>
 ]]></content>
       <categories>
         <category>海事监管平台</category>
@@ -288,6 +361,90 @@
         <tag>论文</tag>
         <tag>经典必看</tag>
         <tag>CVPR</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>（三）Siamese Neural Networks for One-shot Image Recognition</title>
+    <url>/2020/10/19/%EF%BC%88%E4%B8%89%EF%BC%89Siamese%20Neural%20Networks%20for%20One-shot%20Image%20Recognition/</url>
+    <content><![CDATA[<h2 id="论文简介"><a href="#论文简介" class="headerlink" title="论文简介"></a>论文简介</h2><p><strong>Siamese Neural Networks for One-shot Image Recognition</strong></p>
+<p>作者单位：Department of Computer Science, University of Toronto. Toronto, Ontario, Canada</p>
+<p>作者团队：Gregory Koch  、Richard Zemel、Ruslan Salakhutdinov</p>
+<p><a href="https://www.cs.cmu.edu/~rsalakhu/papers/oneshot1.pdf">论文地址</a></p>
+<p><a href="https://github.com/kevinzakka/one-shot-siamese">代码地址</a></p>
+<a id="more"></a>
+
+<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>通过训练同类物体或者不同类物体的pair，使得同类图片的距离尽可能小，不同类别的距离尽可能大。</p>
+<p><img src="/images/%EF%BC%88%E4%B8%89%EF%BC%89Siamese%20Neural%20Networks%20for%20One-shot%20Image%20Recognition/2020080312560847.png" alt="在这里插入图片描述"></p>
+<h2 id="网络架构"><a href="#网络架构" class="headerlink" title="网络架构"></a>网络架构</h2><p>网络主要用了卷积、最大池化、ReLU等。</p>
+<p><img src="/images/%EF%BC%88%E4%B8%89%EF%BC%89Siamese%20Neural%20Networks%20for%20One-shot%20Image%20Recognition/20200803130808990.png" alt="在这里插入图片描述"></p>
+<h4 id="loss-function"><a href="#loss-function" class="headerlink" title="loss function"></a>loss function</h4><p>用的是二分类交叉熵，加了L2正则化项，防止过拟合</p>
+<p><img src="/images/%EF%BC%88%E4%B8%89%EF%BC%89Siamese%20Neural%20Networks%20for%20One-shot%20Image%20Recognition/20200803130439341.png" alt="在这里插入图片描述"></p>
+<h4 id="optimization"><a href="#optimization" class="headerlink" title="optimization"></a>optimization</h4><p><img src="/images/%EF%BC%88%E4%B8%89%EF%BC%89Siamese%20Neural%20Networks%20for%20One-shot%20Image%20Recognition/20200803130555557.png" alt="在这里插入图片描述"></p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>回来补上，老师希望我用测量的方式将船舶与AIS融合。</p>
+]]></content>
+      <categories>
+        <category>论文学习</category>
+      </categories>
+      <tags>
+        <tag>论文</tag>
+        <tag>CVPR</tag>
+        <tag>小样本学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>（二）LearningToCompare_FSL</title>
+    <url>/2020/10/19/%EF%BC%88%E4%BA%8C%EF%BC%89LearningToCompare-FSL/</url>
+    <content><![CDATA[<h2 id="论文简介"><a href="#论文简介" class="headerlink" title="论文简介"></a>论文简介</h2><p><strong>Learning to Compare: Relation Network for Few-Shot Learning</strong></p>
+<p>作者单位：Queen Mary University of London、 University of Oxford 、The University of Edinburgh</p>
+<p>作者团队：Flood Sung  、Tao Xiang</p>
+<p><a href="https://arxiv.org/abs/1711.06025">论文地址</a></p>
+<a id="more"></a>
+
+<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>这篇论文提出了一个小样本学习框架，可以在只给出少量样例下识别出新类。他们提出一个端到端的关系网络（RN），在元学习期间学会深度距离度量去比较一组图像。一旦训练好后，将新类图片与查询集数据计算关系得分。该方法旨在训练少样本学习的有效度量。</p>
+]]></content>
+      <categories>
+        <category>论文学习</category>
+      </categories>
+      <tags>
+        <tag>论文</tag>
+        <tag>CVPR</tag>
+        <tag>小样本学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>opencv相关函数</title>
+    <url>/2020/10/26/opencv%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0/</url>
+    <content><![CDATA[<h1 id="opencv-坐标转换常用的函数"><a href="#opencv-坐标转换常用的函数" class="headerlink" title="opencv 坐标转换常用的函数"></a>opencv 坐标转换常用的函数</h1><p><a href="https://blog.csdn.net/panpan_jiang1/article/details/86063152">参考博客</a></p>
+<ul>
+<li>solvePnP()：函数solvepnp接收一组对应的3D坐标和2D坐标，计算得到两组坐标对应的几何变换（旋转矩阵rvec，平移矩阵tvec）; </li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">solvePnP</span><span class="params">(InputArray objectPoints, InputArray imagePoints, </span></span></span><br><span class="line"><span class="function"><span class="params">               InputArray cameraMatrix, InputArray distCoeffs, </span></span></span><br><span class="line"><span class="function"><span class="params">               OutputArray rvec, OutputArray tvec, <span class="keyword">bool</span> useExtrinsicGuess=<span class="literal">false</span>, </span></span></span><br><span class="line"><span class="function"><span class="params">               <span class="keyword">int</span> flags=ITERATIVE )</span></span></span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<ul>
+<li>projectPoints()：函数projectPoints()根据所给的3D坐标和已知的几何变换来求解投影后的2D坐标。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">projectPoints</span><span class="params">(InputArray objectPoints, InputArray rvec, InputArray tvec,</span></span></span><br><span class="line"><span class="function"><span class="params">                   InputArray cameraMatrix, InputArray distCoeffs, </span></span></span><br><span class="line"><span class="function"><span class="params">                   OutputArray imagePoints, OutputArray jacobian=noArray(), </span></span></span><br><span class="line"><span class="function"><span class="params">                   <span class="keyword">double</span> aspectRatio=<span class="number">0</span> )</span></span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>stereoRectify()：立体矫正，该函数计算每个摄像机(实际上)的旋转矩阵，从而使两个摄像机图像平面成为同一平面。因此，这使得所有的外极线平行，从而简化了稠密立体对应问题。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">stereoRectify</span><span class="params">(InputArray cameraMatrix1, InputArray distCoeffs1, </span></span></span><br><span class="line"><span class="function"><span class="params">                   InputArray cameraMatrix2, InputArray distCoeffs2, Size imageSize, </span></span></span><br><span class="line"><span class="function"><span class="params">                   InputArray R, InputArray T,OutputArray R1, OutputArray R2, </span></span></span><br><span class="line"><span class="function"><span class="params">                   OutputArray P1, OutputArray P2,OutputArray Q, </span></span></span><br><span class="line"><span class="function"><span class="params">                   <span class="keyword">int</span> flags=CALIB_ZERO_DISPARITY, <span class="keyword">double</span> alpha=<span class="number">-1</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                   Size newImageSize=Size(), Rect* validPixROI1=<span class="number">0</span>, </span></span></span><br><span class="line"><span class="function"><span class="params">                   Rect* validPixROI2=<span class="number">0</span> )</span></span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>stereoCalibrate()：stereoCalibrate() 是用来标定一个立体摄像头的，也就是同时标定两个摄像头。标定的结果除了能够求出两个摄像头的内外参数矩阵，跟能够得出两个摄像头的位置关系R,T。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">stereoCalibrate</span><span class="params">(InputArrayOfArrays objectPoints, InputArrayOfArrays imagePoints1,</span></span></span><br><span class="line"><span class="function"><span class="params">　　　　　　　　　　　　　InputArrayOfArrays imagePoints2, </span></span></span><br><span class="line"><span class="function"><span class="params">                       InputOutputArray cameraMatrix1,InputOutputArray distCoeffs1, </span></span></span><br><span class="line"><span class="function"><span class="params">                       InputOutputArray cameraMatrix2, InputOutputArray distCoeffs2, </span></span></span><br><span class="line"><span class="function"><span class="params">                       Size imageSize,OutputArray R,OutputArray T, OutputArray E, </span></span></span><br><span class="line"><span class="function"><span class="params">                       OutputArray F,</span></span></span><br><span class="line"><span class="function"><span class="params">                       TermCriteria  criteria=TermCriteria(TermCriteria::COUNT+TermCriteria::EPS, <span class="number">30</span>, <span class="number">1e-6</span>),</span></span></span><br><span class="line"><span class="function"><span class="params">                       <span class="keyword">int</span> flags=CALIB_FIX_INTRINSIC )</span></span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>opencv</category>
+      </categories>
+      <tags>
+        <tag>使用方法</tag>
+        <tag>语法</tag>
+        <tag>opencv</tag>
       </tags>
   </entry>
 </search>
