@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"flora-dream.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="概述整体架构 前端：vue 后台：flask 算法： yolov5 + 多目标跟踪  开发记录第一次开发记录2020&#x2F;11&#x2F;13主要代码（detect_track_yolov5s.py）12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758">
+<meta property="og:type" content="article">
+<meta property="og:title" content="海事智能监管平台开发记录">
+<meta property="og:url" content="https://flora-dream.github.io/2020/11/04/%E6%B5%B7%E4%BA%8B%E6%99%BA%E8%83%BD%E7%9B%91%E7%AE%A1%E5%B9%B3%E5%8F%B0%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="Flora">
+<meta property="og:description" content="概述整体架构 前端：vue 后台：flask 算法： yolov5 + 多目标跟踪  开发记录第一次开发记录2020&#x2F;11&#x2F;13主要代码（detect_track_yolov5s.py）12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://flora-dream.github.io/images/%E6%B5%B7%E4%BA%8B%E6%99%BA%E8%83%BD%E7%9B%91%E7%AE%A1%E5%B9%B3%E5%8F%B0%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/1.gif">
+<meta property="og:image" content="https://flora-dream.github.io/images/%E6%B5%B7%E4%BA%8B%E6%99%BA%E8%83%BD%E7%9B%91%E7%AE%A1%E5%B9%B3%E5%8F%B0%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/2.gif">
+<meta property="article:published_time" content="2020-11-04T01:42:26.000Z">
+<meta property="article:modified_time" content="2020-11-13T03:37:47.701Z">
+<meta property="article:author" content="Flora Jin">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="flask">
+<meta property="article:tag" content="mysql">
+<meta property="article:tag" content="目标检测">
+<meta property="article:tag" content="目标追踪">
+<meta property="article:tag" content="目标识别">
+<meta property="article:tag" content="数据融合">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://flora-dream.github.io/images/%E6%B5%B7%E4%BA%8B%E6%99%BA%E8%83%BD%E7%9B%91%E7%AE%A1%E5%B9%B3%E5%8F%B0%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/1.gif">
+
+<link rel="canonical" href="https://flora-dream.github.io/2020/11/04/%E6%B5%B7%E4%BA%8B%E6%99%BA%E8%83%BD%E7%9B%91%E7%AE%A1%E5%B9%B3%E5%8F%B0%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>海事智能监管平台开发记录 | Flora</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Flora</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://flora-dream.github.io/2020/11/04/%E6%B5%B7%E4%BA%8B%E6%99%BA%E8%83%BD%E7%9B%91%E7%AE%A1%E5%B9%B3%E5%8F%B0%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.gif">
+      <meta itemprop="name" content="Flora Jin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Flora">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          海事智能监管平台开发记录
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-11-04 09:42:26" itemprop="dateCreated datePublished" datetime="2020-11-04T09:42:26+08:00">2020-11-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-13 11:37:47" itemprop="dateModified" datetime="2020-11-13T11:37:47+08:00">2020-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AE%9E%E6%88%98%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">实战开发</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><h2 id="整体架构"><a href="#整体架构" class="headerlink" title="整体架构"></a>整体架构</h2><ul>
+<li>前端：vue</li>
+<li>后台：flask</li>
+<li>算法： yolov5 + 多目标跟踪</li>
+</ul>
+<h2 id="开发记录"><a href="#开发记录" class="headerlink" title="开发记录"></a>开发记录</h2><h3 id="第一次开发记录2020-11-13"><a href="#第一次开发记录2020-11-13" class="headerlink" title="第一次开发记录2020/11/13"></a>第一次开发记录2020/11/13</h3><h4 id="主要代码（detect-track-yolov5s-py）"><a href="#主要代码（detect-track-yolov5s-py）" class="headerlink" title="主要代码（detect_track_yolov5s.py）"></a>主要代码（detect_track_yolov5s.py）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pyimagesearch.centroidtracker <span class="keyword">import</span> CentroidTracker</span><br><span class="line"><span class="keyword">from</span> pyimagesearch.trackableobject <span class="keyword">import</span> TrackableObject</span><br><span class="line"><span class="keyword">import</span> imutils</span><br><span class="line"><span class="keyword">import</span> dlib</span><br><span class="line"><span class="keyword">from</span> utils.dbutil <span class="keyword">import</span> DatabaseManagement</span><br><span class="line"><span class="keyword">from</span> entity.model <span class="keyword">import</span> FLowOfDay</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">from</span> utils.utils <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">from</span> models.experimental <span class="keyword">import</span> attempt_load</span><br><span class="line"><span class="keyword">from</span> utils.general <span class="keyword">import</span> set_logging</span><br><span class="line"><span class="keyword">from</span> utils.general <span class="keyword">import</span> plot_one_box</span><br><span class="line"><span class="keyword">from</span> utils.general <span class="keyword">import</span> non_max_suppression</span><br><span class="line"><span class="keyword">from</span> utils.general <span class="keyword">import</span> check_img_size</span><br><span class="line"><span class="keyword">from</span> utils.general <span class="keyword">import</span> scale_coords</span><br><span class="line"><span class="keyword">from</span> utils.torch_utils <span class="keyword">import</span> select_device, load_classifier, time_synchronized</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># parameter</span></span><br><span class="line">set_logging()</span><br><span class="line">weights = <span class="string">&quot;weights/yolov5/yolov5s.pt&quot;</span></span><br><span class="line"><span class="comment"># source = &quot;rtsp://admin:admin12345@169.254.32.47/Streaming/Channels/2&quot;</span></span><br><span class="line">device = select_device(<span class="string">&#x27;0&#x27;</span>)</span><br><span class="line">imgsz = <span class="number">640</span></span><br><span class="line"><span class="comment"># 如果设备为gpu，使用Float16</span></span><br><span class="line">half = device.type != <span class="string">&#x27;cpu&#x27;</span>  <span class="comment"># half precision only supported on CUDA</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Load model</span></span><br><span class="line"><span class="comment"># 加载Float32模型，确保用户设定的输入图片分辨率能整除32(如不能则调整为能整除并返回)</span></span><br><span class="line">model = attempt_load(weights, map_location=device)  <span class="comment"># load FP32 model</span></span><br><span class="line">imgsz = check_img_size(imgsz, s=model.stride.max())  <span class="comment"># check img_size</span></span><br><span class="line"><span class="comment"># 设置Float16</span></span><br><span class="line"><span class="keyword">if</span> half:</span><br><span class="line">    model.half()  <span class="comment"># to FP16</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Get names and colors</span></span><br><span class="line"><span class="comment"># 获取类别名字</span></span><br><span class="line">names = model.module.names <span class="keyword">if</span> hasattr(model, <span class="string">&#x27;module&#x27;</span>) <span class="keyword">else</span> model.names</span><br><span class="line"><span class="comment"># 设置画框的颜色</span></span><br><span class="line">colors = [[random.randint(<span class="number">0</span>, <span class="number">255</span>) <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">3</span>)] <span class="keyword">for</span> _ <span class="keyword">in</span> range(len(names))]</span><br><span class="line"></span><br><span class="line">W = <span class="literal">None</span></span><br><span class="line">H = <span class="literal">None</span></span><br><span class="line">set_confidence = <span class="number">0.4</span></span><br><span class="line">skip_frames = <span class="number">30</span></span><br><span class="line">trackers = []</span><br><span class="line">trackableObjects = &#123;&#125;</span><br><span class="line">totalFrames = <span class="number">0</span></span><br><span class="line">ct_dict = &#123;</span><br><span class="line">    <span class="string">&quot;area1&quot;</span>: CentroidTracker(maxDisappeared=<span class="number">40</span>, maxDistance=<span class="number">50</span>),</span><br><span class="line">    <span class="string">&quot;area2&quot;</span>: CentroidTracker(maxDisappeared=<span class="number">40</span>, maxDistance=<span class="number">50</span>),</span><br><span class="line">    <span class="string">&quot;area3&quot;</span>: CentroidTracker(maxDisappeared=<span class="number">40</span>, maxDistance=<span class="number">50</span>),</span><br><span class="line">    <span class="string">&quot;area4&quot;</span>: CentroidTracker(maxDisappeared=<span class="number">40</span>, maxDistance=<span class="number">50</span>),</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># 保存各区域的船舶计数量</span></span><br><span class="line">counts_dict = &#123;</span><br><span class="line">    <span class="string">&quot;area1&quot;</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">&quot;area2&quot;</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">&quot;area3&quot;</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">&quot;area4&quot;</span>: <span class="number">0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">track</span>(<span class="params">frame, area</span>):</span></span><br><span class="line">    <span class="keyword">global</span> W, H, totalFrames, skip_frames, set_confidence, trackers, counts_dict</span><br><span class="line">    ct = ct_dict[area]</span><br><span class="line">    <span class="comment"># 0点清空计数</span></span><br><span class="line">    t = time.strftime(<span class="string">&quot;%H:%M:%S&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> t == <span class="string">&#x27;00:00:00&#x27;</span>:</span><br><span class="line">        dbm = DatabaseManagement()</span><br><span class="line">        dbm.add_obj(FLowOfDay(datetime.now(), counts_dict[area], area))</span><br><span class="line">        dbm.close()</span><br><span class="line">        <span class="keyword">for</span> key <span class="keyword">in</span> counts_dict.keys():</span><br><span class="line">            counts_dict[key] = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    frame = imutils.resize(frame, width=<span class="number">640</span>)</span><br><span class="line">    rgb = cv2.cvtColor(frame,  )</span><br><span class="line">    img = img_pre(frame, imgsz)</span><br><span class="line">    img = torch.from_numpy(img).to(device)</span><br><span class="line">    <span class="comment"># 图片也设置为Float16</span></span><br><span class="line">    img = img.half() <span class="keyword">if</span> half <span class="keyword">else</span> img.float()  <span class="comment"># uint8 to fp16/32</span></span><br><span class="line">    img /= <span class="number">255.0</span>  <span class="comment"># 0 - 255 to 0.0 - 1.0</span></span><br><span class="line">    <span class="comment"># 没有batch_size的话则在最前面添加一个轴</span></span><br><span class="line">    <span class="keyword">if</span> img.ndimension() == <span class="number">3</span>:</span><br><span class="line">        img = img.unsqueeze(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    rects = []</span><br><span class="line"></span><br><span class="line">    <span class="comment"># check to see if we should run a more computationally expensive</span></span><br><span class="line">    <span class="comment"># object detection method to aid our tracker</span></span><br><span class="line">    <span class="keyword">if</span> totalFrames % skip_frames == <span class="number">0</span>:</span><br><span class="line">        trackers = []</span><br><span class="line"></span><br><span class="line">        pred = model(img)[<span class="number">0</span>]</span><br><span class="line">        pred = non_max_suppression(pred, <span class="number">0.4</span>, <span class="number">0.5</span>)  <span class="comment"># conf_thres, iou_thres</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># loop over the detections</span></span><br><span class="line">        <span class="comment"># Process detections</span></span><br><span class="line">        <span class="comment"># 对这张图片作处理</span></span><br><span class="line">        <span class="keyword">for</span> i, det <span class="keyword">in</span> enumerate(pred):  <span class="comment"># detections per image</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> det <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">and</span> len(det):</span><br><span class="line">                <span class="comment"># Rescale boxes from img_size to im0 size</span></span><br><span class="line">                <span class="comment"># 调整预测框的坐标：基于resize+pad的图片的坐标--&gt;基于原size图片的坐标</span></span><br><span class="line">                <span class="comment"># 此时坐标格式为xyxy</span></span><br><span class="line">                <span class="comment"># Rescale boxes from img_size to im0 size</span></span><br><span class="line"></span><br><span class="line">                det[:, :<span class="number">4</span>] = scale_coords(img.shape[<span class="number">2</span>:], det[:, :<span class="number">4</span>], frame.shape).round()</span><br><span class="line"></span><br><span class="line">                <span class="comment"># Write results</span></span><br><span class="line">                <span class="keyword">for</span> *xyxy, conf, cls <span class="keyword">in</span> det:</span><br><span class="line">                    <span class="keyword">if</span> int(cls) != <span class="number">0</span>:</span><br><span class="line">                        <span class="keyword">continue</span></span><br><span class="line">                    (startX, startY, endX, endY)=(int(xyxy[<span class="number">0</span>]), int(xyxy[<span class="number">1</span>]), int(xyxy[<span class="number">2</span>]), int(xyxy[<span class="number">3</span>]))</span><br><span class="line">                    <span class="comment"># 在原图上画框</span></span><br><span class="line">                    <span class="comment"># label = &#x27;%s %.2f&#x27; % (names[int(cls)], conf)</span></span><br><span class="line">                    <span class="comment"># plot_one_box(xyxy, frame, label=label, color=colors[int(cls)], line_thickness=3)</span></span><br><span class="line">                    <span class="comment"># construct a dlib rectangle object from the bounding</span></span><br><span class="line">                    <span class="comment"># box coordinates and then start the dlib correlation</span></span><br><span class="line">                    <span class="comment"># tracker</span></span><br><span class="line">                    tracker = dlib.correlation_tracker()</span><br><span class="line">                    rect = dlib.rectangle(int(startX), int(startY), int(endX), int(endY))</span><br><span class="line">                    tracker.start_track(rgb, rect)</span><br><span class="line"></span><br><span class="line">                    <span class="comment"># add the tracker to our list of trackers so we can</span></span><br><span class="line">                    <span class="comment"># utilize it during skip frames</span></span><br><span class="line">                    trackers.append(tracker)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># otherwise, we should utilize our object *trackers* rather than</span></span><br><span class="line">    <span class="comment"># object *detectors* to obtain a higher frame processing throughput</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="comment"># loop over the trackers</span></span><br><span class="line">        <span class="keyword">for</span> tracker <span class="keyword">in</span> trackers:</span><br><span class="line">            <span class="comment"># update the tracker and grab the updated position</span></span><br><span class="line">            tracker.update(rgb)</span><br><span class="line">            pos = tracker.get_position()</span><br><span class="line"></span><br><span class="line">            <span class="comment"># unpack the position object</span></span><br><span class="line">            startX = int(pos.left())</span><br><span class="line">            startY = int(pos.top())</span><br><span class="line">            endX = int(pos.right())</span><br><span class="line">            endY = int(pos.bottom())</span><br><span class="line"></span><br><span class="line">            <span class="comment"># add the bounding box coordinates to the rectangles list</span></span><br><span class="line">            rects.append((startX, startY, endX, endY))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># use the centroid tracker to associate the (1) old object</span></span><br><span class="line">    <span class="comment"># centroids with (2) the newly computed object centroids</span></span><br><span class="line">    objects = ct.update(rects, area)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># loop over the tracked objects</span></span><br><span class="line">    <span class="keyword">for</span> (objectID, centroid) <span class="keyword">in</span> objects.items():</span><br><span class="line">        <span class="comment"># check to see if a trackable object exists for the current</span></span><br><span class="line">        <span class="comment"># object ID</span></span><br><span class="line">        to = trackableObjects.get(objectID, <span class="literal">None</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># if there is no existing trackable object, create one</span></span><br><span class="line">        <span class="keyword">if</span> to <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            to = TrackableObject(objectID, centroid)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># otherwise, there is a trackable object so we can utilize it</span></span><br><span class="line">        <span class="comment"># to determine direction</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            to.centroids.append(centroid)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># check to see if the object has been counted or not</span></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> to.counted:</span><br><span class="line">                counts_dict[area] += <span class="number">1</span></span><br><span class="line">                to.counted = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># store the trackable object in our dictionary</span></span><br><span class="line">        trackableObjects[objectID] = to</span><br><span class="line"></span><br><span class="line">        <span class="comment"># draw both the ID of the object and the centroid of the</span></span><br><span class="line">        <span class="comment"># object on the output frame</span></span><br><span class="line">        text = <span class="string">&quot;ID &#123;&#125;&quot;</span>.format(objectID)</span><br><span class="line">        cv2.putText(frame, text, (centroid[<span class="number">0</span>] - <span class="number">10</span>, centroid[<span class="number">1</span>] - <span class="number">10</span>),</span><br><span class="line">                    cv2.FONT_HERSHEY_SIMPLEX, <span class="number">0.5</span>, (<span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>), <span class="number">2</span>)</span><br><span class="line">        cv2.circle(frame, (centroid[<span class="number">0</span>], centroid[<span class="number">1</span>]), <span class="number">4</span>, (<span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>), <span class="number">-1</span>)</span><br><span class="line">    totalFrames += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> frame</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="效果展示"><a href="#效果展示" class="headerlink" title="效果展示"></a>效果展示</h4><p>【图一】</p>
+<p><img src="/images/%E6%B5%B7%E4%BA%8B%E6%99%BA%E8%83%BD%E7%9B%91%E7%AE%A1%E5%B9%B3%E5%8F%B0%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/1.gif" alt="1"></p>
+<p>【图二】</p>
+<p><img src="/images/%E6%B5%B7%E4%BA%8B%E6%99%BA%E8%83%BD%E7%9B%91%E7%AE%A1%E5%B9%B3%E5%8F%B0%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/2.gif" alt="2"></p>
+<h4 id="存在的问题"><a href="#存在的问题" class="headerlink" title="存在的问题"></a>存在的问题</h4><ul>
+<li><p>画面中的人物为静止状态，但是跟踪点有抖动                                                      【图一】</p>
+</li>
+<li><p>当人物移动太快会丢失跟踪器（id 8）                                                                   【图二】</p>
+</li>
+<li><p>当画面中人物重叠时，被遮挡住的人物（id 1）丢失追踪器                                【图二】</p>
+</li>
+<li><p>当丢失追踪器的对象再次被检测到时会赋予其新id，导致计数错误                    【图二】</p>
+</li>
+</ul>
+<h4 id="下一步计划"><a href="#下一步计划" class="headerlink" title="下一步计划"></a>下一步计划</h4><ul>
+<li>优化追踪器</li>
+<li>计算坐标等其他信息</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Flora Jin 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="Flora Jin 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/flask/" rel="tag"># flask</a>
+              <a href="/tags/mysql/" rel="tag"># mysql</a>
+              <a href="/tags/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/" rel="tag"># 目标检测</a>
+              <a href="/tags/%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA/" rel="tag"># 目标追踪</a>
+              <a href="/tags/%E7%9B%AE%E6%A0%87%E8%AF%86%E5%88%AB/" rel="tag"># 目标识别</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E8%9E%8D%E5%90%88/" rel="tag"># 数据融合</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/10/29/%E5%B0%8F%E6%A0%B7%E6%9C%AC%E5%AD%A6%E4%B9%A0%E7%BB%BC%E8%BF%B0/" rel="prev" title="小样本学习综述">
+      <i class="fa fa-chevron-left"></i> 小样本学习综述
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/11/05/pytorch%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="next" title="pytorch学习笔记">
+      pytorch学习笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">整体架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95"><span class="nav-number">1.2.</span> <span class="nav-text">开发记录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%952020-11-13"><span class="nav-number">1.2.1.</span> <span class="nav-text">第一次开发记录2020&#x2F;11&#x2F;13</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E4%BB%A3%E7%A0%81%EF%BC%88detect-track-yolov5s-py%EF%BC%89"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">主要代码（detect_track_yolov5s.py）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%88%E6%9E%9C%E5%B1%95%E7%A4%BA"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">效果展示</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">存在的问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8B%E4%B8%80%E6%AD%A5%E8%AE%A1%E5%88%92"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">下一步计划</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Flora Jin"
+      src="/images/1.gif">
+  <p class="site-author-name" itemprop="name">Flora Jin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/flora-dream" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;flora-dream" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:736536764@qq.com" title="E-Mail → mailto:736536764@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://flora-dream.github.io/" title="https:&#x2F;&#x2F;flora-dream.github.io">Flora</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.bilibili.com/" title="https:&#x2F;&#x2F;www.bilibili.com" rel="noopener" target="_blank">Bilibili</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Flora Jin</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
