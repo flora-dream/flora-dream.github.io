@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>每日疗愈 · 家庭教育小语</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- 背景装饰 -->
+        <div class="background-decoration">
+            <div class="floating-bubble bubble-1"></div>
+            <div class="floating-bubble bubble-2"></div>
+            <div class="floating-bubble bubble-3"></div>
+            <div class="floating-bubble bubble-4"></div>
+        </div>
+
+        <!-- 头部 -->
+        <header class="header">
+            <h1 class="logo">
+                <span class="logo-icon">🌱</span>
+                每日疗愈
+            </h1>
+            <p class="subtitle">用爱陪伴，用心成长</p>
+        </header>
+
+        <!-- 主要内容区域 -->
+        <main class="main-content">
+            <!-- 日期显示 -->
+            <div class="date-display">
+                <div class="date-wrapper">
+                    <span class="date-text" id="currentDate"></span>
+                    <span class="day-count">第 <span id="dayCount">1</span> 天</span>
+                </div>
+            </div>
+
+            <!-- 语录卡片 -->
+            <div class="quote-card">
+                <div class="quote-decoration">
+                    <span class="quote-mark left">"</span>
+                    <span class="quote-mark right">"</span>
+                </div>
+                <div class="quote-content">
+                    <p class="quote-text" id="dailyQuote">
+                        loading...
+                    </p>
+                    <div class="quote-author">
+                        — 家庭教育智慧
+                    </div>
+                </div>
+            </div>
+
+            <!-- 互动按钮 -->
+            <div class="action-buttons">
+                <button class="btn btn-primary" id="newQuoteBtn">
+                    <span class="btn-icon">🔄</span>
+                    换一句
+                </button>
+                <button class="btn btn-secondary" id="shareBtn">
+                    <span class="btn-icon">💝</span>
+                    分享
+                </button>
+            </div>
+
+            <!-- 小贴士 -->
+            <div class="tips-section">
+                <div class="tips-card">
+                    <h3 class="tips-title">💡 今日陪伴小贴士</h3>
+                    <p class="tips-content" id="dailyTip">
+                        loading...
+                    </p>
+                </div>
+            </div>
+        </main>
+
+        <!-- 底部 -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p class="footer-text">每一个孩子都是独特的花朵</p>
+                <div class="footer-decoration">
+                    <span>🌸</span>
+                    <span>🌿</span>
+                    <span>🌸</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 分享弹窗 -->
+    <div class="modal" id="shareModal">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>分享今日语录</h3>
+                <button class="modal-close" id="modalClose">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="share-preview" id="sharePreview">
+                    <!-- 分享预览内容将由JS生成 -->
+                </div>
+                <div class="share-buttons">
+                    <button class="share-btn" id="copyBtn">
+                        <span>📋</span>
+                        复制文本
+                    </button>
+                    <button class="share-btn" id="saveImageBtn">
+                        <span>📸</span>
+                        保存图片
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
